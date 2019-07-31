@@ -1,17 +1,22 @@
 package com.kerimsamimi.issuemanagement.service;
 
-import org.springframework.data.domain.Page;
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
-import com.kerimsamimi.issuemanagement.entity.User;
+
+import com.kerimsamimi.issuemanagement.dto.UserDto;
+import com.kerimsamimi.issuemanagement.util.TPage;
 
 public interface UserService {
 	
-	User save(User user);
+	public UserDto save(UserDto user);
 	
-	User getById(Long id);
+	public UserDto getById(Long id);
 	
-	Page<User> getAllPageable(Pageable pageable);
+	public TPage<UserDto> getAllPageable(Pageable pageable);
 	
-	User getByUsername(String username);
+	public UserDto getByUsername(String username);
+	
+	public List<UserDto> getAll();
 
 }
