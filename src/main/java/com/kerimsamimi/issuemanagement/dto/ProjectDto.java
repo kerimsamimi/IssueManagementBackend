@@ -20,6 +20,28 @@ public class ProjectDto {
 	@ApiModelProperty(required = true,value="Code of Project")
 	private String projectCode;
 	
+	@NotNull
+	@ApiModelProperty(required = true,value="Id of Manager")
+	private Long managerId;
+	
+	@ApiModelProperty(required = true,value="Name of Manager")
+	private UserDto manager;
+	
+	
+	
+	
+	public UserDto getManager() {
+		return manager;
+	}
+	public void setManager(UserDto manager) {
+		this.manager = manager;
+	}
+	public Long getManagerId() {
+		return managerId;
+	}
+	public void setManagerId(Long managerId) {
+		this.managerId = managerId;
+	}
 	public Long getId() {
 		return id;
 	}

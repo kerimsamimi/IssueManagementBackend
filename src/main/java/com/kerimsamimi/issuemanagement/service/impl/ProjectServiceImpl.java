@@ -15,7 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kerimsamimi.issuemanagement.controller.ProjectController;
 import com.kerimsamimi.issuemanagement.dto.ProjectDto;
 import com.kerimsamimi.issuemanagement.entity.Project;
+import com.kerimsamimi.issuemanagement.entity.User;
 import com.kerimsamimi.issuemanagement.repository.ProjectRepository;
+import com.kerimsamimi.issuemanagement.repository.UserRepository;
 import com.kerimsamimi.issuemanagement.service.ProjectService;
 import com.kerimsamimi.issuemanagement.util.TPage;
 
@@ -29,6 +31,18 @@ public class ProjectServiceImpl implements ProjectService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	
+
+	public ProjectServiceImpl(ProjectRepository projectRepository, ModelMapper modelMapper,
+			UserRepository userRepository) {
+		this.projectRepository = projectRepository;
+		this.modelMapper = modelMapper;
+		this.userRepository = userRepository;
+	}
 
 	@Override
 	public ProjectDto save(ProjectDto project) {
@@ -39,9 +53,10 @@ public class ProjectServiceImpl implements ProjectService{
 			logger.error("[PROJECTCHECK CAN NOT BE NULL]");
 			throw new IllegalArgumentException("Project Code Already Exist");	
 		}
-			
-		
 		Project p=modelMapper.map(project,Project.class);
+		User user= userRepository.getOne(project.getManagerId());
+		p.setManager(user);
+		
 		p=projectRepository.save(p);
 		project.setId(p.getId());
 		return project;
