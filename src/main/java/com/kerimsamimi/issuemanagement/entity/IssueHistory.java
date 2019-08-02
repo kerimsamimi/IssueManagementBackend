@@ -55,6 +55,10 @@ public class IssueHistory extends BaseEntity {
 	@Column(name = "issue_status")
 	@Enumerated(EnumType.STRING)
 	private IssueStatus issueStatus;
+	
+	@Column(name = "details", length = 4000)
+	private String details;
+	
 
 	public String getDescription() {
 		return description;
@@ -87,9 +91,6 @@ public class IssueHistory extends BaseEntity {
 	public void setDetails(String details) {
 		this.details = details;
 	}
-
-	@Column(name = "details", length = 4000)
-	private String details;
 	
 	public Long getId() {
 		return id;

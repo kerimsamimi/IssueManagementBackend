@@ -1,6 +1,8 @@
 package com.kerimsamimi.issuemanagement.controller;
 
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -45,6 +47,13 @@ public class ProjectController {
 	@ApiOperation(value="Get By Pagination Operation", response = ProjectDto.class)
 	public ResponseEntity<TPage<ProjectDto>> getAllPagination(Pageable pageable){
 		TPage<ProjectDto> data = projectServiceImpl.getAllPageable(pageable);
+		return ResponseEntity.ok(data);
+	}
+	
+	@GetMapping()
+	@ApiOperation(value="Get All Operation", response = ProjectDto.class, responseContainer = "List")
+	public ResponseEntity<List<ProjectDto>> getAll(){
+		List<ProjectDto> data = projectServiceImpl.getAll();
 		return ResponseEntity.ok(data);
 	}
 	

@@ -2,6 +2,7 @@ package com.kerimsamimi.issuemanagement.service;
 
 import org.springframework.data.domain.Pageable;
 
+import com.kerimsamimi.issuemanagement.dto.IssueDetailDto;
 import com.kerimsamimi.issuemanagement.dto.IssueDto;
 import com.kerimsamimi.issuemanagement.util.TPage;
 
@@ -17,5 +18,7 @@ public interface IssueService {
 	Boolean delete(Long issueId);
 	
 	IssueDto update(Long id, IssueDto project);
+	
+	IssueDetailDto getByIdWithDetails(Long id);
 
 }

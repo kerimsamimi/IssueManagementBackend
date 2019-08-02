@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "Issue Data Transfer Object")
-public class IssueDto {
+public class IssueUpdateDto {
 	@ApiModelProperty(value="Issue Id")
 	private Long id;
 	@ApiModelProperty(required = true,value="Description")
@@ -24,11 +24,9 @@ public class IssueDto {
 	@ApiModelProperty(required = true,value="Issue Status")
 	private IssueStatus issueStatus;
 	@ApiModelProperty(required = true,value="Assignee")
-	private UserDto assignee;
+	private Long assignee_id;
 	@ApiModelProperty(required = true,value="Project")
-	private ProjectDto project;
-	private Long projectId;
-	
+	private Long project_id;
 	public Long getId() {
 		return id;
 	}
@@ -59,22 +57,19 @@ public class IssueDto {
 	public void setIssueStatus(IssueStatus issueStatus) {
 		this.issueStatus = issueStatus;
 	}
-	public UserDto getAssignee() {
-		return assignee;
+	public Long getAssignee_id() {
+		return assignee_id;
 	}
-	public void setAssignee(UserDto assignee) {
-		this.assignee = assignee;
+	public void setAssignee_id(Long assignee_id) {
+		this.assignee_id = assignee_id;
 	}
-	public ProjectDto getProject() {
-		return project;
+	public Long getProject_id() {
+		return project_id;
 	}
-	public void setProject(ProjectDto project) {
-		this.project = project;
+	public void setProject_id(Long project_id) {
+		this.project_id = project_id;
 	}
-	public Long getProjectId() {
-		return projectId;
-	}
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
-	}
+	
+	
+	
 }

@@ -8,7 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,8 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Table(name="users")
-@Data
+@Table(name = "users", indexes = {@Index(name = "idx_username", columnList = "uname")})
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -48,6 +49,8 @@ public class User extends BaseEntity{
 	@JoinColumn(name="assignee_user_id")
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Issue> issues;
+	
+	
 
 	public Long getId() {
 		return id;

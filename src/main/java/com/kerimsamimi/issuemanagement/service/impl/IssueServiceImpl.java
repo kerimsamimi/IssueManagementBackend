@@ -1,15 +1,28 @@
 package com.kerimsamimi.issuemanagement.service.impl;
 
 import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import javax.transaction.Transactional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.kerimsamimi.issuemanagement.dto.IssueDetailDto;
 import com.kerimsamimi.issuemanagement.dto.IssueDto;
+import com.kerimsamimi.issuemanagement.dto.IssueHistoryDto;
+import com.kerimsamimi.issuemanagement.dto.IssueUpdateDto;
 import com.kerimsamimi.issuemanagement.entity.Issue;
+import com.kerimsamimi.issuemanagement.entity.IssueStatus;
+import com.kerimsamimi.issuemanagement.entity.User;
 import com.kerimsamimi.issuemanagement.repository.IssueRepository;
+import com.kerimsamimi.issuemanagement.repository.ProjectRepository;
+import com.kerimsamimi.issuemanagement.repository.UserRepository;
+import com.kerimsamimi.issuemanagement.service.IssueHistoryService;
 import com.kerimsamimi.issuemanagement.service.IssueService;
 import com.kerimsamimi.issuemanagement.util.TPage;
 
@@ -21,17 +34,47 @@ public class IssueServiceImpl implements IssueService{
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	@Autowired
+	private IssueHistoryService issueHistoryService;
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
+	private ProjectRepository projectRepository;
+	
+	
 
 	@Override
 	public IssueDto save(IssueDto issue) {
-		if(issue.getDate()==null) {
-			throw new IllegalArgumentException("Issue Date cannot be null");
-		}
-		Issue issueDb= modelMapper.map(issue, Issue.class);
-		
-		issueDb= issueRepository.save(issueDb);
-		return modelMapper.map(issueDb, IssueDto.class);
-	}
+		issue.setDate(new Date());
+		issue.setIssueStatus(IssueStatus.OPEN);
+        
+        Issue issueEntity = modelMapper.map(issue, Issue.class);
+        
+        issueEntity.setProject(projectRepository.getOne(issue.getProjectId()));
+        issueEntity = issueRepository.save(issueEntity);
+
+        issue.setId(issueEntity.getId());
+        return issue;
+    }
+	
+	@Transactional
+    public IssueDetailDto update(Long id, IssueUpdateDto issue) {
+        Issue issueDb = issueRepository.getOne(id);
+        User user = userRepository.getOne(issue.getAssignee_id());
+        issueHistoryService.addHistory(id,issueDb);
+
+        issueDb.setAssignee(user);
+        issueDb.setDate(issue.getDate());
+        issueDb.setDescription(issue.getDescription());
+        issueDb.setDetails(issue.getDetails());
+        issueDb.setIssueStatus(issue.getIssueStatus());
+        issueDb.setProject(projectRepository.getOne(issue.getProject_id()));
+        issueRepository.save(issueDb);
+        return getByIdWithDetails(id);
+    }
 
 	@Override
 	public IssueDto getById(Long id) {
@@ -39,6 +82,14 @@ public class IssueServiceImpl implements IssueService{
 		
 		return modelMapper.map(issue, IssueDto.class);
 	}
+	
+	public IssueDetailDto getByIdWithDetails(Long id) {
+        Issue issue = issueRepository.getOne(id);
+        IssueDetailDto detailDto = modelMapper.map(issue, IssueDetailDto.class);
+        List<IssueHistoryDto> issueHistoryDtos = issueHistoryService.getByIssueId(issue.getId());
+        detailDto.setIssueHistories(issueHistoryDtos);
+        return detailDto;
+    }
 
 	@Override
 	public TPage<IssueDto> getAllPageable(Pageable pageable) {
