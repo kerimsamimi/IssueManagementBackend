@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kerimsamimi.issuemanagement.dto.UserDto;
+import com.kerimsamimi.issuemanagement.entity.User;
+import com.kerimsamimi.issuemanagement.repository.UserRepository;
 import com.kerimsamimi.issuemanagement.service.impl.UserServiceImpl;
 import com.kerimsamimi.issuemanagement.util.ApiPaths;
 import com.kerimsamimi.issuemanagement.util.TPage;
@@ -56,8 +59,15 @@ public class UserController {
     }
 
     @PostMapping
-    @ApiOperation(value = "Create Operation", response = UserDto.class)
-    public ResponseEntity<UserDto> createProject(@Valid @RequestBody UserDto user) {
+    @ApiOperation(value = "Create User", response = UserDto.class)
+    public ResponseEntity<UserDto> createUser(@Valid  @RequestBody UserDto user) {
         return ResponseEntity.ok(userServiceImpl.save(user));
     }
+    
+    @DeleteMapping("/{id}")
+	@ApiOperation(value="Delete Operation", response = Boolean.class)
+    public ResponseEntity<Boolean> delete(@PathVariable Long id){
+        return ResponseEntity.ok(userServiceImpl.delete(id));
+    }
+    
 }

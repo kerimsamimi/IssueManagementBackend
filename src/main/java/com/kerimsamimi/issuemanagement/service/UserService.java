@@ -18,5 +18,7 @@ public interface UserService {
 	public UserDto getByUsername(String username);
 	
 	public List<UserDto> getAll();
+	
+	public Boolean delete(Long id);
 
 }
