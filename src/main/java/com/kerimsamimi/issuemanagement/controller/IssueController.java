@@ -19,11 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.kerimsamimi.issuemanagement.dto.IssueDetailDto;
 import com.kerimsamimi.issuemanagement.dto.IssueDto;
 import com.kerimsamimi.issuemanagement.dto.IssueUpdateDto;
-import com.kerimsamimi.issuemanagement.dto.ProjectDto;
 import com.kerimsamimi.issuemanagement.entity.IssueStatus;
 import com.kerimsamimi.issuemanagement.service.impl.IssueServiceImpl;
 import com.kerimsamimi.issuemanagement.util.ApiPaths;

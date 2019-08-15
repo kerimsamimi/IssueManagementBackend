@@ -20,5 +20,7 @@ public interface UserService {
 	public List<UserDto> getAll();
 	
 	public Boolean delete(Long id);
+	
+	public Boolean login(String username, String password);
 
 }

@@ -67,4 +67,10 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
+	@Override
+	public Boolean login(String username, String password) {
+		User user = userRepository.findByUsernameAndPassword(username, password);
+		return user!=null;
+	}
+
 }

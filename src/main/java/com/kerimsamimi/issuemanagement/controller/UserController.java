@@ -70,4 +70,9 @@ public class UserController {
         return ResponseEntity.ok(userServiceImpl.delete(id));
     }
     
+//    @PostMapping("/login")
+//    public ResponseEntity<Boolean> login(@RequestBody User user){
+//    	return ResponseEntity.ok(userServiceImpl.login(user.getUsername(), user.getPassword()));
+//    }
+    
 }
