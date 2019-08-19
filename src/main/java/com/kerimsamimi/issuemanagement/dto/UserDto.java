@@ -1,8 +1,5 @@
 package com.kerimsamimi.issuemanagement.dto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Pattern;
-
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

@@ -35,6 +35,13 @@ public class UserServiceImpl implements UserService {
         user.setId(u.getId());
         return user;
     }
+	
+	@Override
+	public User saveUser(User user) {
+		User u = userRepository.save(user);
+//		  user.setId(u.getId());
+	        return u;
+	}
 
 	@Override
     public UserDto getById(Long id) {
@@ -73,4 +80,12 @@ public class UserServiceImpl implements UserService {
 		return user!=null;
 	}
 
+	@Override
+	public Boolean register(String username, String password, String passwordConfirm) {
+//		User user = new User();
+//		if(user.getPassword()!=null && user.getPassword()==user.getPasswordConfirm() && user.getUsername()!=null) {
+//	        return userRepository.saveByUsernameAndPasswordAndPasswordConfirm(user.getUsername(),user.getPassword(),user.getPasswordConfirm());
+//	      }
+		return false;
+	}
 }

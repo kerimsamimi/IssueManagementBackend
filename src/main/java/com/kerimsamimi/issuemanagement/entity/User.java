@@ -40,10 +40,11 @@ public class User extends BaseEntity{
 	@Column(name = "pwd", length = 200)
 	private String password;
 	
+	@Column(name = "pwdConfirm", length = 200)
+	private String passwordConfirm;
+
 	@Column(name = "name_surname", length = 200)
 	private String nameSurname;
-	
-
 	
 	@Column(name="email", length = 100)
 	private String email;
@@ -52,8 +53,14 @@ public class User extends BaseEntity{
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Issue> issues;
 	
-	
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
 
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+	
 	public Long getId() {
 		return id;
 	}
